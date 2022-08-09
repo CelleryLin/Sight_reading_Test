@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f9f9f9;
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  background-color: #f6f6f6;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  width: 800px;
+  text-align: center;
+  transform: translate(-50%,-50%);
+  font-family: 'ABeeZee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 75px;
+  line-height: 113px;
+  color: #4DA3A9;
+}
+
+.midiconn {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  width: 800px;
+  text-align: center;
+  transform: translate(-50%,-50%);
+  font-family: 'ABeeZee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 43px;
+  color: #000;
+}
+
+.startbtn {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(217, 217, 217, 0.3);
+  border: 3px solid #fff;
+  border-radius: 20px;
+
+  font-family: 'ABeeZee';
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  font-size: 28px;
+  text-align: center;
+  color: #136167;
+  transition: 0.5s ease-out;
+}
+
+.startbtn:hover {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  font-weight: 600;
+  background: radial-gradient(circle, rgb(195, 251, 255) 0%, rgba(9,121,114,0) 100%);
+  border: 3px solid #fff;
+  border-radius: 20px;
+  transform: translate(-50%,-60%);
+  box-shadow: 0px 5px 20px 1px rgba(0,0,0,0.1);
+
+  transition: 0.5s ease-out;
+}
+
+.startbtn:active {
+  background:#8976f0;
+  transform: translate(-50%,-57%);
+  border: 3px solid #4b38ba;
+  transition: 10ms;
+}
+
+.dot1 {
+  position: fixed;
+  height: 1428px;
+  width: 1428px;
+  background-color: #D8F5FB;
+  border-radius: 50%;
+  transform: translate(789px, 177px);
+}
+
+.dot2 {
+  position: fixed;
+  width: 1044px;
+  height: 1044px;
+  background-color: #B5E9F4;
+  border-radius: 50%;
+  transform: translate(-400px, -300px);
+}
+
+.blurbg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(249, 249, 249, 0.2);
+  backdrop-filter: blur(200px);
+}
+
+
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  height: 400px;
+  width: 600px;
+  background-color: white;
+}
+
+.Qcont {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  height: 400px;
+  width: 600px;
+  background-color: white;
+}
+
+.score {
+  align-content: center;
+  background-color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.timer {
+  position: relative;
+  font-size: 300;
+  
+}

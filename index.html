@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+  <link rel="stylesheet" href="index.css">
+  <script type="module" src="index.js" defer></script>
+  <title>Signt-reading Test</title>
+</head>
+<body>
+  <div class="audiocontainer"> </div>
+  <script>
+      const Addaudio = document.querySelector(".audiocontainer")
+      for (var i=23;i<=94;i++){
+          var newWav=document.createElement('audio');
+          newWav.id=(`r${i}`);
+          newWav.src=(`notes/${i}.wav`);
+          Addaudio.appendChild(newWav);
+      }
+  </script>
+  <div id="container" class="container">
+    <div id="dot1" class="dot1"></div>
+    <div id="dot2" class="dot2"></div>
+    <div class="blurbg"></div>
+    <p class="title">Sight-reading Test</p>
+    <input type="submit" value="START" id="startbtn" class="startbtn" onclick="starttest();">START</input>
+    <p class="midiconn">Midi connection state: <span id="constate" class="constate">Disconnected</span></p>
+  </div>
+  <script>
+    function starttest(){
+      location.assign("./index2.html");
+
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="script.js" defer></script>
+    <script type="module" src="chord.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.0.3/build/cjs/vexflow.js"></script>
+    <title>Piano</title>
+</head>
+<body>
+    <div class="score">
+        <p>Score: <span id="tot_scores">0</span> </p>
+        <p id="corrans">Correct: 0</p>
+        <p id="errans">Missmatch: 0</p>
+        <p id="totans">Total: 0</p>
+
+        <div class="timer">
+            <p>Time: <span id="timer_view">0</span> </p>
+        </div>
+
+        <button id="re-issue">Re-issue</button>
+
+    </div>
+
+    <div id="questions" class="questions"></div>
+
+    <div class="audiocontainer"> </div>
+    <script>
+        const Addaudio = document.querySelector(".audiocontainer")
+        for (var i=23;i<=94;i++){
+            var newWav=document.createElement('audio');
+            newWav.id=(`r${i}`);
+            newWav.src=(`notes/${i}.wav`);
+            Addaudio.appendChild(newWav);
+        }
+    </script>
+
+</body>
+</html>

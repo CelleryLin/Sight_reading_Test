@@ -5,6 +5,7 @@ var myans = [];
 var ans = [];
 var total=0, corans=0, errans=0, tot_score=0;
 
+
 if (navigator.requestMIDIAccess){
     navigator.requestMIDIAccess().then(MidiAccessSuccess, MidiAccessFailure);
 
@@ -150,6 +151,9 @@ var toMIDICCArr = function(keys) {
 }
 
 var GetQues = function() {
+    const randcol=Math.floor(Math.random()*16777215).toString(16);
+    document.getElementById("dot1").style.backgroundColor=getRandomColor();
+    document.getElementById("dot2").style.backgroundColor=getRandomColor();
 
     const staff = document.getElementById('questions');
     while (staff.hasChildNodes()) {
@@ -184,7 +188,7 @@ var GetQues = function() {
     const { Renderer, Stave, StaveNote, Formatter, Voice, StaveConnector, Accidental } = Vex.Flow;
     const div = document.getElementById("questions");
     const vf = new Renderer(div, Renderer.Backends.SVG);
-    vf.resize(600, 400);
+    vf.resize(300, 300);
     const context = vf.getContext();
 
     const Tstave = new Stave(30, 30, 200);
@@ -293,11 +297,12 @@ const Scorecalc = debounce(() => {
     document.getElementById("tot_scores").textContent=Math.floor(tot_score);
 });
 
-var scoretimerid;
-var scoretimer=0;
+var scoretimerid, countdownid;
+var scoretimer=0, countdowntimer=60;
 var Reget = document.getElementById("re-issue");
 
 GetQues();
+start_countdown();
 
 Reget.addEventListener("click", () => {
     tot_score=tot_score-1000;
@@ -310,8 +315,95 @@ function start_timer(){
     scoretimer=0;
     clearInterval(scoretimerid);
     scoretimerid=setInterval(() => {
-    scoretimer=scoretimer+0.01;
-    document.getElementById("timer_view").textContent=scoretimer.toFixed(2);
+        scoretimer=scoretimer+0.01;
     }, 10);
 }
 
+
+function start_countdown(){
+    countdowntimer=60;
+    clearInterval(countdownid);
+    countdownid=setInterval(() => {
+        countdowntimer=countdowntimer-0.01;
+        document.getElementById("timer_view").textContent=countdowntimer.toFixed(2);
+        if(countdowntimer<=0){
+            clearInterval(countdownid);
+            var Gameoverhtml=`
+                <div class="ggcont">
+                    <p class="ggtext">Gameover</p>
+                    <p class="ggscore">Your Score: <span>${Math.floor(tot_score)}</span></p>
+                    <script>
+                        function restart(){
+                            console.log("fuckkkkk");
+                            return 0;
+                        }
+                    </script>
+                    <input type="submit" value="Play Again" class="replaybtn" id="replaybtn"></input>
+                </div>
+                `;
+            //const cont = document.getElementById('container');
+            //while (cont.hasChildNodes()) {
+            //    cont.removeChild(cont.lastChild);
+            //}
+
+            var somehtml=document.getElementById("container");
+            somehtml.innerHTML=Gameoverhtml;
+            var Replay = document.getElementById("replaybtn");
+            Replay.addEventListener("click",() => {
+                restart();
+            });
+            
+        }
+    }, 10);
+    
+}
+
+function getRandomColor() {
+    var trans = '0.2'; // 50% transparency
+    var color = 'rgba(';
+    for (var i = 0; i < 3; i++) {
+      color += Math.floor(Math.random() * 255) + ',';
+    }
+    color += trans + ')'; // add the transparency
+    return color;
+  }
+
+var standardinnerHtml=`
+<div id="dot1" class="dot1"></div>
+<div id="dot2" class="dot2"></div>
+<div class="blurbg"></div>
+<div class="scorecont">
+    <div>
+        <div class="score">
+            <p>Score: <span id="tot_scores">0</span> </p>
+            <p id="corrans">Correct: 0</p>
+            <p id="errans">Missmatch: 0</p>
+            <p id="totans">Total: 0</p>
+    
+            <div class="timer">
+                <p>Time: <span id="timer_view">0</span> </p>
+            </div>
+        </div>
+
+        <button class="reissue" id="re-issue">Re-issue</button>
+    </div>
+    
+</div>
+
+<div class="questioncont">
+    <div id="questions" class="questions"></div>
+</div>
+
+`;
+
+function restart(){
+    var somehtml=document.getElementById("container");
+    somehtml.innerHTML=standardinnerHtml;
+    myans = [];
+    ans = [];
+    total=0; corans=0; errans=0; tot_score=0;
+    scoretimer=0; countdowntimer=60;
+    GetQues();
+    start_countdown();
+
+}

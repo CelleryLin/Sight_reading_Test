@@ -6,6 +6,7 @@ var ans = [];
 var total=0, corans=0, errans=0, tot_score=0;
 
 
+
 if (navigator.requestMIDIAccess){
     navigator.requestMIDIAccess().then(MidiAccessSuccess, MidiAccessFailure);
 
@@ -298,8 +299,16 @@ var scoretimerid, countdownid;
 var scoretimer=0, countdowntimer=60;
 var Reget = document.getElementById("re-issue");
 
+
 GetQues();
 start_countdown();
+
+var accval=document.getElementById("accamount");
+var doubleacc=document.getElementById("dbacc");
+var filter_accamount=accval.value;
+var filter_isDouble=doubleacc.checked;
+
+console.log(filter_isDouble)
 
 Reget.addEventListener("click", () => {
     tot_score=tot_score-1000;
@@ -390,6 +399,15 @@ var standardinnerHtml=`
 <div class="questioncont">
     <div id="questions" class="questions"></div>
 </div>
+<div class="filtercont">
+            <div>
+                <input type="checkbox" id="dbacc" value="Double Sharp/Flat" checked>Double Sharp/Flat  
+            </div>
+            <div>
+                <input type="range" min="0" max="5" value="4" id="accamount">
+                <div>Maximum Accidentals Amount: <span id="accshowval">4</span></div>
+            </div>
+        </div>
 
 `;
 
@@ -405,10 +423,6 @@ function restart(){
 
 }
 
-var accval=document.getElementById("accamount");
-var doubleacc=document.getElementById("dbacc");
-var filter_accamount=accval.value;
-var filter_isDouble=doubleacc.value;
 accval.addEventListener("input",() => {
     document.getElementById("accshowval").innerText=accval.value;
     filter_accamount=accval.value;
@@ -424,6 +438,7 @@ doubleacc.addEventListener("change",() => {
 });
 
 function filter(accamount,dbacc){
+    console.log(filter_isDouble);
     if(accamount>filter_accamount || (filter_isDouble===0 && dbacc===1)){
         console.log(filter_accamount);
         return 1;

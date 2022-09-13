@@ -69,17 +69,6 @@ function updateDevices(event){
     console.log(`Name: ${event.port.name}, \nState: ${event.port.state}`)
 }
 
-//var GetQues = function() {
-//    const Addques = document.querySelector(".questions")
-//    var i = Math.floor(Math.random() * 4) + 1;
-//    Addques.innerHTML = '';
-//    var newPng=document.createElement('img');
-//    newPng.id="rh";
-//    newPng.src=(`rh/${i}.png`);
-//    Addques.appendChild(newPng);
-//    return i-1;
-//}
-
 var toMIDICC = function(note) {
     const notestr = note.split('/');
     var ccnum=0;
@@ -151,22 +140,16 @@ var toMIDICCArr = function(keys) {
 }
 
 var GetQues = function() {
-    const randcol=Math.floor(Math.random()*16777215).toString(16);
-    document.getElementById("dot1").style.backgroundColor=getRandomColor();
-    document.getElementById("dot2").style.backgroundColor=getRandomColor();
-
+    var dbacc=0;
     const staff = document.getElementById('questions');
     while (staff.hasChildNodes()) {
         staff.removeChild(staff.lastChild);
     }
     var random_chord = chords[Math.floor(Math.random() * chords.length)]
-    //console.log(random_chord.accidentals.length)
-    //while(random_chord.accidentals.length!=0){
-    //    random_chord = chords[Math.floor(Math.random() * chords.length)]
-    //}
-    
-    var rootnote_keys=[]
-    var rootnote_acc=[]
+    var acclist=getacclist(random_chord);
+    var accamount=acclist.length;
+    var rootnote_keys=[];
+    var rootnote_acc=[];
     //var lhnum=(Math.floor(Math.random() * 2)+1)
     var lhnum=1;
     var rootindex=0;
@@ -176,15 +159,26 @@ var GetQues = function() {
         kk+='/'
         kk+='3'
         var aacc=rootnote[rootindex].accidentals;
+        acclist.push(aacc)
         rootnote_keys.push(kk)
         if(aacc.length!=0){
             rootnote_acc.push([i,aacc]);
         }
     }
-    //console.log(rootnote_acc);
-    //console.log(random_chord.keys);
-    //console.log(rootnote_keys.concat(random_chord.keys));
+    accamount+=rootnote_acc.length;
+    dbacc=(acclist.includes("bb") || acclist.includes("##"))?1:0;
+    if (filter(accamount,dbacc)){
+        GetQues();
+    }
+    else {
+        drawscore(rootnote_keys, random_chord,rootnote_acc)
+    }
+}
+
+
+var drawscore = function(rootnote_keys, random_chord, rootnote_acc) {
     ans=toMIDICCArr(rootnote_keys.concat(random_chord.keys));
+    //console.log(ans)
     const { Renderer, Stave, StaveNote, Formatter, Voice, StaveConnector, Accidental } = Vex.Flow;
     const div = document.getElementById("questions");
     const vf = new Renderer(div, Renderer.Backends.SVG);
@@ -284,6 +278,9 @@ const Scorecalc = debounce(() => {
         tot_score=tot_score+(1000-scoretimer*10);
         GetQues();
         total++; corans++;
+        const randcol=Math.floor(Math.random()*16777215).toString(16);
+        document.getElementById("dot1").style.backgroundColor=getRandomColor();
+        document.getElementById("dot2").style.backgroundColor=getRandomColor();
     }
     else{
         console.log("BAD!");
@@ -406,4 +403,41 @@ function restart(){
     GetQues();
     start_countdown();
 
+}
+
+var accval=document.getElementById("accamount");
+var doubleacc=document.getElementById("dbacc");
+var filter_accamount=accval.value;
+var filter_isDouble=doubleacc.value;
+accval.addEventListener("input",() => {
+    document.getElementById("accshowval").innerText=accval.value;
+    filter_accamount=accval.value;
+});
+
+doubleacc.addEventListener("change",() => {
+    if(doubleacc.checked){
+        filter_isDouble=1;
+    }
+    else{
+        filter_isDouble=0;
+    }
+});
+
+function filter(accamount,dbacc){
+    if(accamount>filter_accamount || (filter_isDouble===0 && dbacc===1)){
+        console.log(filter_accamount);
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function getacclist(random_chord){
+    var len=random_chord.accidentals.length;
+    var acc=[];
+    for(var i=0;i<len;i++){
+        acc.push(random_chord.accidentals[i][1])
+    }
+    return acc;
 }

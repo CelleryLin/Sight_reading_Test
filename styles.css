@@ -135,6 +135,25 @@ body {
     backdrop-filter: blur(200px);
 }
 
+.filtercont {
+    position: fixed;
+    height: 100px;
+    width: 800px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    background-color: #B5E9F4;
+    font-family: 'ABeeZee';
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+
+
+
 .ggcont {
     position: fixed;
     height: fit-content;

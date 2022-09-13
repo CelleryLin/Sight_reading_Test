@@ -9,7 +9,7 @@
     <script type="module" src="script.js"></script>
     <script type="module" src="chord.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vexflow@4.0.3/build/cjs/vexflow.js"></script>
-    <title>Piano</title>
+    <title>Sight-reading Test</title>
 </head>
 <body>
     <div id="container" class="container">
@@ -36,6 +36,15 @@
     
         <div class="questioncont">
             <div id="questions" class="questions"></div>
+        </div>
+        <div class="filtercont">
+            <div>
+                <input type="checkbox" id="dbacc" value="Double Sharp/Flat">Double Sharp/Flat  
+            </div>
+            <div>
+                <input type="range" min="0" max="5" value="4" id="accamount">
+                <div>Maximum Accidentals Amount: <span id="accshowval">4</span></div>
+            </div>
         </div>
     </div>
     
